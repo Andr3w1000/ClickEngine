@@ -1,0 +1,15 @@
+bundle:
+  name: clickengine
+
+include:
+  - resources/*.yml
+
+variables:
+  catalog_name:
+    description: Unity Catalog catalog name for this environment
+
+targets:
+  dev:
+    default: true
+    variables:
+      catalog_name: cda_dev

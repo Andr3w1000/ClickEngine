@@ -1,0 +1,12 @@
+resources:
+  # catalogs:
+  #   cda:
+  #     name: ${var.catalog_name}
+  #     comment: "ClickEngine project catalog"
+  #     storage_root: "Default Storage"
+
+  schemas:
+    clickengine:
+      name: clickengine
+      catalog_name: ${var.catalog_name}
+      comment: "ClickEngine project schema"
