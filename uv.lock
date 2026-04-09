@@ -211,27 +211,26 @@ wheels = [
 name = "clickengine"
 version = "0.1.0"
 source = { virtual = "." }
-dependencies = [
-    { name = "pyspark" },
-]
 
-[package.optional-dependencies]
+[package.dev-dependencies]
 dev = [
     { name = "databricks-sdk" },
     { name = "mypy" },
     { name = "pre-commit" },
+    { name = "pyspark" },
     { name = "ruff" },
 ]
 
 [package.metadata]
-requires-dist = [
-    { name = "databricks-sdk", marker = "extra == 'dev'" },
-    { name = "mypy", marker = "extra == 'dev'" },
-    { name = "pre-commit", marker = "extra == 'dev'" },
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "databricks-sdk" },
+    { name = "mypy" },
+    { name = "pre-commit" },
     { name = "pyspark", specifier = ">=4.0" },
-    { name = "ruff", marker = "extra == 'dev'" },
+    { name = "ruff" },
 ]
-provides-extras = ["dev"]
 
 [[package]]
 name = "cryptography"

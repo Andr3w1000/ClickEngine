@@ -7,16 +7,15 @@ requires-python = ">=3.10"
 authors = [
     { name = "andras", email = "andras.szuda@outlook.com" }
 ]
-dependencies = [
-    "pyspark >= 4.0",
-]
+dependencies = []
 
-[project.optional-dependencies]
+[dependency-groups]
 dev = [
+    "pyspark >= 4.0",
     "pre-commit",
     "mypy",
     "ruff",
-    "databricks-sdk"
+    "databricks-sdk",
 ]
 
 [tool.mypy]
@@ -36,9 +35,6 @@ line-length = 120
 target-version = "py311"
 builtins = ["spark", "dbutils", "display", "displayHTML", "sc", "sqlContext"]
 
-[tool.ruff.lint]
-select = ["E", "W", "F", "I", "UP"]
-ignore = ["E501", "F401", "F811", "E402", "F821"]
 
 [tool.ruff.lint.per-file-ignores]
-"src/notebooks/**/*.py" = ["E402", "F401", "F811", "F821", "I001"]
+"notebooks/**/*.py" = ["E402", "F401", "F811", "F821", "I001"]
