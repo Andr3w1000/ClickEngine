@@ -25,7 +25,7 @@ class _JsonFormatter(logging.Formatter):
         if record.exc_info:
             payload["exception"] = self.formatException(record.exc_info)
 
-        return json.dumps(payload)
+        return json.dumps(payload, indent=4, sort_keys=True, default=str)
 
 
 def get_logger(name: str, level: int = logging.INFO) -> logging.Logger:
