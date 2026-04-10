@@ -36,7 +36,4 @@ def read_stream_data(
           .load(job_config.get("source_location")))
     logger.info("Read complete")
     
-    if "schema" in job_config:
-        df = df.schema(job_config["schema"])
-
     return df
