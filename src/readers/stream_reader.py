@@ -1,13 +1,15 @@
 import logging
 
 from pyspark.sql import DataFrame, SparkSession
+from pyspark.sql.types import StructType
 
 logger = logging.getLogger(__name__)
 
 
 def read_stream_data(
     spark: SparkSession,
-    job_config: dict
+    job_config: dict,
+    schema: StructType | None = None,
 ) -> DataFrame:
     """Read data from source_location using the given format and options.
 
@@ -30,10 +32,14 @@ def read_stream_data(
         job_config.get("read_options", {}),
     )
 
-    df = (spark.readStream
+    reader = (spark.readStream
           .format(job_config.get("read_format", "json"))
-          .options(**job_config.get("read_options", {}))
-          .load(job_config.get("source_location")))
+          .options(**job_config.get("read_options", {})))
+    
+    if schema:
+        logger.info("Applying schema to reader")
+        reader = reader.schema(schema)
+    
     logger.info("Read complete")
     
-    return df
+    return reader.load(job_config.get("source_location"))
