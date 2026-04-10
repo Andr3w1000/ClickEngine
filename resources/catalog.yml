@@ -3,7 +3,10 @@ resources:
   #   cda:
   #     name: ${var.catalog_name}
   #     comment: "ClickEngine project catalog"
-  #     storage_root: "Default Storage"
+  #     grants:
+  #       - principal: developers
+  #         privileges:
+  #           - ALL_PRIVILEGES
 
   schemas:
     clickengine:
