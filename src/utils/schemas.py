@@ -20,13 +20,12 @@ USER_EVENT_SCHEMA = StructType([
 ])
 
 CLICK_EVENT_SCHEMA = StructType([
-    StructField("event_type", StringType(), True),
-    StructField("click_id", StringType(), True),
-    StructField("user_id", StringType(), True),
-    StructField("page", StringType(), True),
-    StructField("element", StringType(), True),
-    StructField("device", StringType(), True),
-    StructField("browser", StringType(), True),
-    StructField("session_id", StringType(), True),
+    StructField("click_id",  StringType(),    False),  # UUID, not nullable
+    StructField("user_id",   StringType(),    False),  # UUID, not nullable
+    StructField("email",     StringType(),    True),
+    StructField("location",  StringType(),    True),
+    StructField("page",      StringType(),    True),
+    StructField("browser",   StringType(),    True),
+    StructField("device",    StringType(),    True),
     StructField("timestamp", TimestampType(), True),
 ])
