@@ -2,12 +2,11 @@ import logging
 
 from pyspark.sql import DataFrame
 
-logger = logging.getLogger(__name__)
-
 
 def write_stream_data(
     df: DataFrame,
     job_config: dict,
+    logger: logging.Logger,
 ) -> None:
     """Write a streaming DataFrame to a Delta table using Structured Streaming.
 

@@ -3,12 +3,11 @@ import logging
 from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql.types import StructType
 
-logger = logging.getLogger(__name__)
-
 
 def read_stream_data(
     spark: SparkSession,
     job_config: dict,
+    logger: logging.Logger,
     schema: StructType | None = None,
 ) -> DataFrame:
     """Read data from source_location using the given format and options.
