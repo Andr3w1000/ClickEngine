@@ -119,3 +119,10 @@ def get_logger(
         logger.addHandler(delta_handler)
 
     return logger
+
+
+def flush_logger(logger: logging.Logger) -> None:
+    """Flush all DeltaLogHandlers attached to the logger."""
+    for handler in logger.handlers:
+        if isinstance(handler, DeltaLogHandler):
+            handler.flush()
