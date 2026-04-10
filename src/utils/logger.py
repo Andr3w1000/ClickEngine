@@ -7,6 +7,8 @@ from datetime import datetime, timezone
 
 from pyspark.sql import Row, SparkSession
 
+from src.utils.schemas import LOG_SCHEMA
+
 
 class _JsonFormatter(logging.Formatter):
     """Formats log records as single-line JSON objects."""
@@ -76,7 +78,7 @@ class DeltaLogHandler(logging.Handler):
             return
 
         rows, self._buffer = self._buffer, []
-        df = self._spark.createDataFrame(rows)
+        df = self._spark.createDataFrame(rows, schema=LOG_SCHEMA)
         df.write.format("delta").mode("append").saveAsTable(self._table)
 
 

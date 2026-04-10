@@ -29,3 +29,11 @@ CLICK_EVENT_SCHEMA = StructType([
     StructField("device",    StringType(),    True),
     StructField("timestamp", TimestampType(), True),
 ])
+
+LOG_SCHEMA = StructType([
+    StructField("timestamp", TimestampType(), False),
+    StructField("level",     StringType(),    False),
+    StructField("logger",    StringType(),    False),
+    StructField("message",   StringType(),    False),
+    StructField("exception", StringType(),    True),
+])
