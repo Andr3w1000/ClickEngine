@@ -152,10 +152,10 @@ def flush_logger(logger: logging.Logger) -> None:
             handler.flush()
 
 
-def log_extra(**kwargs) -> dict:
+def append_extra(**kwargs) -> dict:
     """Build an ``extra`` dict for per-message context.
 
     Usage:
-        logger.info("Batch done", extra=log_extra(row_count=500, batch=3))
+        logger.info("Batch done", extra=append_extra(row_count=500, batch=3))
     """
     return {"_ctx": kwargs}
