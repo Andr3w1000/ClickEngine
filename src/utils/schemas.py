@@ -36,4 +36,5 @@ LOG_SCHEMA = StructType([
     StructField("logger",    StringType(),    False),
     StructField("message",   StringType(),    False),
     StructField("exception", StringType(),    True),
+    StructField("metadata",  StringType(),    True),
 ])
