@@ -3,7 +3,7 @@ name = "clickengine"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 authors = [
     { name = "andras", email = "andras.szuda@outlook.com" }
 ]
@@ -19,7 +19,7 @@ dev = [
 ]
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.11"
 files = ["src"]
 warn_return_any = true
 warn_unused_ignores = true
