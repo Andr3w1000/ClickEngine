@@ -27,7 +27,6 @@ def read_stream_data(
     logger.info(
         "Reading data | format=%s | source=%s | options=%s",
         job_config.get("read_format", "json"),
-        job_config.get("source_location"),
         job_config.get("read_options", {}),
     )
 
@@ -40,5 +39,4 @@ def read_stream_data(
         reader = reader.schema(schema)
     
     logger.info("Read complete")
-    
-    return reader.load(job_config.get("source_location"))
+    return reader.load()
