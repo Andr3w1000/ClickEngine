@@ -11,30 +11,23 @@ logger.info("Starting click data load")
 # COMMAND ----------
 
 # DBTITLE 1,Cell 3
-_tenant_id     = dbutils.secrets.get(scope="clickengine_dev_kv", key="tenant_id")
-_client_id     = dbutils.secrets.get(scope="clickengine_dev_kv", key="client_id")
-_client_secret = dbutils.secrets.get(scope="clickengine_dev_kv", key="client_secret")
+NAMESPACE = "evhns-cda-dev"
+EVENTHUB_NAME = "evh-cda-dev"
+CONNECTION_STRING= "get_from_secret"
 
 job_config = {
     "read_format": "kafka",
     "read_options": {
-        "kafka.bootstrap.servers": "evhns-cda-dev.servicebus.windows.net:9093",
-        "subscribe": "evh-clicks",
-        "kafka.security.protocol": "SASL_SSL",
-        "kafka.sasl.mechanism": "OAUTHBEARER",
-        "kafka.sasl.jaas.config": (
-            "kafkashaded.org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required "
-            f"clientId='{_client_id}' "
-            f"clientSecret='{_client_secret}' "
-            "scope='https://eventhubs.azure.net/.default';"
-        ),
-        "kafka.sasl.login.callback.handler.class": (
-            "kafkashaded.org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler"
-        ),
-        "kafka.sasl.oauthbearer.token.endpoint.url": (
-            f"https://login.microsoftonline.com/{_tenant_id}/oauth2/v2.0/token"
-        ),
-        "startingOffsets": "latest",
+                "kafka.bootstrap.servers"  : f"{NAMESPACE}.servicebus.windows.net:9093",
+                "kafka.security.protocol"  : "SASL_SSL",
+                "kafka.sasl.mechanism"     : "PLAIN",
+                "kafka.sasl.jaas.config"   : (
+                    "kafkashaded.org.apache.kafka.common.security.plain.PlainLoginModule required "
+                    f'username="$ConnectionString" '
+                    f'password="{CONNECTION_STRING}";'
+                ),
+                "subscribe"                : EVENTHUB_NAME,
+                "startingOffsets"          : "earliest",
     },
     "checkpoint_location": "/Volumes/cda_dev/clickengine/checkpoints/load_click/checkpoint",
     "target_table": "cda_dev.clickengine.clicks",
