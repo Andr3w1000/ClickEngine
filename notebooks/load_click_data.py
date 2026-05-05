@@ -11,6 +11,10 @@ logger.info("Starting click data load")
 # COMMAND ----------
 
 # DBTITLE 1,Cell 3
+_tenant_id     = dbutils.secrets.get(scope="clickengine_dev_kv", key="tenant_id")
+_client_id     = dbutils.secrets.get(scope="clickengine_dev_kv", key="client_id")
+_client_secret = dbutils.secrets.get(scope="clickengine_dev_kv", key="client_secret")
+
 job_config = {
     "read_format": "kafka",
     "read_options": {
@@ -19,10 +23,16 @@ job_config = {
         "kafka.security.protocol": "SASL_SSL",
         "kafka.sasl.mechanism": "OAUTHBEARER",
         "kafka.sasl.jaas.config": (
-            "org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required;"
+            "kafkashaded.org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required "
+            f"clientId='{_client_id}' "
+            f"clientSecret='{_client_secret}' "
+            "scope='https://eventhubs.azure.net/.default';"
         ),
         "kafka.sasl.login.callback.handler.class": (
-            "com.microsoft.azure.eventhubs.kafka.oauthbearer.OAuthBearerLoginCallbackHandler"
+            "kafkashaded.org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler"
+        ),
+        "kafka.sasl.oauthbearer.token.endpoint.url": (
+            f"https://login.microsoftonline.com/{_tenant_id}/oauth2/v2.0/token"
         ),
         "startingOffsets": "latest",
     },
