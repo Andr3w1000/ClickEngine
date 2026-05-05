@@ -25,7 +25,7 @@ def read_stream_data(
         AnalysisException: If the source path does not exist or the format is invalid.
     """
     logger.info(
-        "Reading data | format=%s | source=%s | options=%s",
+        "Reading data | format=%s | options=%s",
         job_config.get("read_format", "json"),
         job_config.get("read_options", {}),
     )
